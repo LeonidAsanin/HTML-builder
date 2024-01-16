@@ -22,3 +22,5 @@ async function mergeCssFiles(sourceFolderPath, destinationFilePath) {
 }
 
 mergeCssFiles(stylesFolderPath, bundleFilePath).catch(console.error);
+
+module.exports = mergeCssFiles;

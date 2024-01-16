@@ -1,11 +1,14 @@
 const fsPromises = require('fs').promises;
 const path = require('path');
+const mergeCssFiles = require('../05-merge-styles');
 
 async function buildPage() {
   const distPath = path.join(__dirname, 'project-dist');
+  const stylesSourcePath = path.join(__dirname, 'styles');
+  const stylesDestinationPath = path.join(distPath, 'style.css');
   await createFolder(distPath);
   await buildIndexHtml(distPath);
-  // TODO: bundle style.css
+  await mergeCssFiles(stylesSourcePath, stylesDestinationPath);
   // TODO: copy assets
 }
 
