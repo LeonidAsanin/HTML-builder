@@ -33,3 +33,5 @@ async function copyDirContent(sourcePath, destinationPath) {
 }
 
 copyDir(filesFolderPath, filesCopyFolderPath).catch(console.error);
+
+module.exports = copyDir;
