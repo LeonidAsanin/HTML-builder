@@ -19,8 +19,8 @@ async function clearFolder(folderPath) {
 async function copyFiles(sourcePath, destinationPath) {
   const files = await fsPromises.readdir(sourcePath);
   for (const fileName of files) {
-    const source = sourcePath.toString() + '\\' + fileName;
-    const destination = destinationPath.toString() + '\\' + fileName;
+    const source = path.join(sourcePath.toString(), fileName);
+    const destination = path.join(destinationPath.toString(), fileName);
     await fsPromises.copyFile(source, destination);
   }
 }
