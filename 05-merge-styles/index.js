@@ -1,24 +1,24 @@
 const fsPromises = require('fs').promises;
 const path = require('path');
 
-async function mergeCssFiles() {
-  const bundleFilePath = path.join(__dirname, 'project-dist', 'bundle.css');
-  const stylesFolderPath = path.join(__dirname, 'styles');
+const stylesFolderPath = path.join(__dirname, 'styles');
+const bundleFilePath = path.join(__dirname, 'project-dist', 'bundle.css');
 
-  await fsPromises.writeFile(bundleFilePath, '');
+async function mergeCssFiles(sourceFolderPath, destinationFilePath) {
+  await fsPromises.writeFile(destinationFilePath, '');
 
-  const styleFiles = await fsPromises.readdir(stylesFolderPath);
+  const styleFiles = await fsPromises.readdir(sourceFolderPath);
 
   for (const styleFile of styleFiles) {
-    const filePath = path.join(stylesFolderPath, styleFile);
+    const filePath = path.join(sourceFolderPath, styleFile);
     const fileExtension = path.extname(styleFile);
     const stat = await fsPromises.stat(filePath);
     if (!stat.isFile() || fileExtension !== '.css') {
       continue;
     }
     const content = await fsPromises.readFile(filePath, { encoding: 'utf8' });
-    await fsPromises.appendFile(bundleFilePath, content);
+    await fsPromises.appendFile(destinationFilePath, content);
   }
 }
 
-mergeCssFiles().catch(console.error);
+mergeCssFiles(stylesFolderPath, bundleFilePath).catch(console.error);
